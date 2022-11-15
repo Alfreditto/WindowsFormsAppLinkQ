@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0f10613edc9b419cbf3afe21f9cb7097" Name="Diagram1">
+        <EntityTypeShape EntityType="videoclubBinarioModel.alquileres" Width="1.5" PointX="5.25" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="videoclubBinarioModel.categorias" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="videoclubBinarioModel.estilos" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="videoclubBinarioModel.peliculas" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="videoclubBinarioModel.socios" Width="1.5" PointX="3" PointY="6.25" IsExpanded="true" />
+        <AssociationConnector Association="videoclubBinarioModel.alquileres_fk_pel" ManuallyRouted="false" />
+        <AssociationConnector Association="videoclubBinarioModel.alquileres_fk_soc" ManuallyRouted="false" />
+        <AssociationConnector Association="videoclubBinarioModel.peliculas_fk_cat" ManuallyRouted="false" />
+        <AssociationConnector Association="videoclubBinarioModel.peliculas_fk_est" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

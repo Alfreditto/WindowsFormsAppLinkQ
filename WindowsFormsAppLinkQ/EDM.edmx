@@ -1,0 +1,359 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="videoclubBinarioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="alquileres">
+          <Key>
+            <PropertyRef Name="codAlquiler" />
+          </Key>
+          <Property Name="codAlquiler" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fechaAlquiler" Type="date" />
+          <Property Name="socio" Type="int" Nullable="false" />
+          <Property Name="pelicula" Type="int" Nullable="false" />
+          <Property Name="fechaDevolucion" Type="date" />
+          <Property Name="precio" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="categorias">
+          <Key>
+            <PropertyRef Name="categoria" />
+          </Key>
+          <Property Name="categoria" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="precio" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="estilos">
+          <Key>
+            <PropertyRef Name="estilo" />
+          </Key>
+          <Property Name="estilo" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="peliculas">
+          <Key>
+            <PropertyRef Name="codpeli" />
+          </Key>
+          <Property Name="codpeli" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="titulo" Type="varchar" MaxLength="80" />
+          <Property Name="director" Type="varchar" MaxLength="80" />
+          <Property Name="protagonista" Type="varchar" MaxLength="80" />
+          <Property Name="argumento" Type="varchar" MaxLength="1000" />
+          <Property Name="estilo" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="anio" Type="int" />
+          <Property Name="caratula" Type="image" />
+          <Property Name="categoria" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="stock" Type="int" />
+        </EntityType>
+        <EntityType Name="socios">
+          <Key>
+            <PropertyRef Name="idSocio" />
+          </Key>
+          <Property Name="idSocio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="login" Type="varchar" MaxLength="12" />
+          <Property Name="pwd" Type="varchar" MaxLength="12" />
+          <Property Name="nombre" Type="varchar" MaxLength="80" />
+          <Property Name="apell1" Type="varchar" MaxLength="80" />
+          <Property Name="apell2" Type="varchar" MaxLength="80" />
+          <Property Name="direccion" Type="varchar" MaxLength="80" />
+          <Property Name="localidad" Type="varchar" MaxLength="80" />
+          <Property Name="telefono" Type="varchar" MaxLength="20" />
+          <Property Name="email" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <Association Name="alquileres_fk_pel">
+          <End Role="peliculas" Type="Self.peliculas" Multiplicity="1" />
+          <End Role="alquileres" Type="Self.alquileres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="peliculas">
+              <PropertyRef Name="codpeli" />
+            </Principal>
+            <Dependent Role="alquileres">
+              <PropertyRef Name="pelicula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="alquileres_fk_soc">
+          <End Role="socios" Type="Self.socios" Multiplicity="1" />
+          <End Role="alquileres" Type="Self.alquileres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="socios">
+              <PropertyRef Name="idSocio" />
+            </Principal>
+            <Dependent Role="alquileres">
+              <PropertyRef Name="socio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="peliculas_fk_cat">
+          <End Role="categorias" Type="Self.categorias" Multiplicity="1" />
+          <End Role="peliculas" Type="Self.peliculas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categorias">
+              <PropertyRef Name="categoria" />
+            </Principal>
+            <Dependent Role="peliculas">
+              <PropertyRef Name="categoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="peliculas_fk_est">
+          <End Role="estilos" Type="Self.estilos" Multiplicity="1" />
+          <End Role="peliculas" Type="Self.peliculas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estilos">
+              <PropertyRef Name="estilo" />
+            </Principal>
+            <Dependent Role="peliculas">
+              <PropertyRef Name="estilo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="videoclubBinarioModelStoreContainer">
+          <EntitySet Name="alquileres" EntityType="Self.alquileres" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="categorias" EntityType="Self.categorias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="estilos" EntityType="Self.estilos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="peliculas" EntityType="Self.peliculas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="socios" EntityType="Self.socios" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="alquileres_fk_pel" Association="Self.alquileres_fk_pel">
+            <End Role="peliculas" EntitySet="peliculas" />
+            <End Role="alquileres" EntitySet="alquileres" />
+          </AssociationSet>
+          <AssociationSet Name="alquileres_fk_soc" Association="Self.alquileres_fk_soc">
+            <End Role="socios" EntitySet="socios" />
+            <End Role="alquileres" EntitySet="alquileres" />
+          </AssociationSet>
+          <AssociationSet Name="peliculas_fk_cat" Association="Self.peliculas_fk_cat">
+            <End Role="categorias" EntitySet="categorias" />
+            <End Role="peliculas" EntitySet="peliculas" />
+          </AssociationSet>
+          <AssociationSet Name="peliculas_fk_est" Association="Self.peliculas_fk_est">
+            <End Role="estilos" EntitySet="estilos" />
+            <End Role="peliculas" EntitySet="peliculas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="videoclubBinarioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="alquileres">
+          <Key>
+            <PropertyRef Name="codAlquiler" />
+          </Key>
+          <Property Name="codAlquiler" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fechaAlquiler" Type="DateTime" Precision="0" />
+          <Property Name="socio" Type="Int32" Nullable="false" />
+          <Property Name="pelicula" Type="Int32" Nullable="false" />
+          <Property Name="fechaDevolucion" Type="DateTime" Precision="0" />
+          <Property Name="precio" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="peliculas" Relationship="Self.alquileres_fk_pel" FromRole="alquileres" ToRole="peliculas" />
+          <NavigationProperty Name="socios" Relationship="Self.alquileres_fk_soc" FromRole="alquileres" ToRole="socios" />
+        </EntityType>
+        <EntityType Name="categorias">
+          <Key>
+            <PropertyRef Name="categoria" />
+          </Key>
+          <Property Name="categoria" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="precio" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="peliculas" Relationship="Self.peliculas_fk_cat" FromRole="categorias" ToRole="peliculas" />
+        </EntityType>
+        <EntityType Name="estilos">
+          <Key>
+            <PropertyRef Name="estilo" />
+          </Key>
+          <Property Name="estilo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="peliculas" Relationship="Self.peliculas_fk_est" FromRole="estilos" ToRole="peliculas" />
+        </EntityType>
+        <EntityType Name="peliculas">
+          <Key>
+            <PropertyRef Name="codpeli" />
+          </Key>
+          <Property Name="codpeli" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="titulo" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="director" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="protagonista" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="argumento" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="estilo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="anio" Type="Int32" />
+          <Property Name="caratula" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="categoria" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="stock" Type="Int32" />
+          <NavigationProperty Name="alquileres" Relationship="Self.alquileres_fk_pel" FromRole="peliculas" ToRole="alquileres" />
+          <NavigationProperty Name="categorias" Relationship="Self.peliculas_fk_cat" FromRole="peliculas" ToRole="categorias" />
+          <NavigationProperty Name="estilos" Relationship="Self.peliculas_fk_est" FromRole="peliculas" ToRole="estilos" />
+        </EntityType>
+        <EntityType Name="socios">
+          <Key>
+            <PropertyRef Name="idSocio" />
+          </Key>
+          <Property Name="idSocio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="login" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="pwd" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="nombre" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="apell1" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="apell2" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="direccion" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="localidad" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="alquileres" Relationship="Self.alquileres_fk_soc" FromRole="socios" ToRole="alquileres" />
+        </EntityType>
+        <Association Name="alquileres_fk_pel">
+          <End Role="peliculas" Type="Self.peliculas" Multiplicity="1" />
+          <End Role="alquileres" Type="Self.alquileres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="peliculas">
+              <PropertyRef Name="codpeli" />
+            </Principal>
+            <Dependent Role="alquileres">
+              <PropertyRef Name="pelicula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="alquileres_fk_soc">
+          <End Role="socios" Type="Self.socios" Multiplicity="1" />
+          <End Role="alquileres" Type="Self.alquileres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="socios">
+              <PropertyRef Name="idSocio" />
+            </Principal>
+            <Dependent Role="alquileres">
+              <PropertyRef Name="socio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="peliculas_fk_cat">
+          <End Role="categorias" Type="Self.categorias" Multiplicity="1" />
+          <End Role="peliculas" Type="Self.peliculas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categorias">
+              <PropertyRef Name="categoria" />
+            </Principal>
+            <Dependent Role="peliculas">
+              <PropertyRef Name="categoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="peliculas_fk_est">
+          <End Role="estilos" Type="Self.estilos" Multiplicity="1" />
+          <End Role="peliculas" Type="Self.peliculas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estilos">
+              <PropertyRef Name="estilo" />
+            </Principal>
+            <Dependent Role="peliculas">
+              <PropertyRef Name="estilo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="videoclubBinarioEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="alquileres" EntityType="Self.alquileres" />
+          <EntitySet Name="categorias" EntityType="Self.categorias" />
+          <EntitySet Name="estilos" EntityType="Self.estilos" />
+          <EntitySet Name="peliculas" EntityType="Self.peliculas" />
+          <EntitySet Name="socios" EntityType="Self.socios" />
+          <AssociationSet Name="alquileres_fk_pel" Association="Self.alquileres_fk_pel">
+            <End Role="peliculas" EntitySet="peliculas" />
+            <End Role="alquileres" EntitySet="alquileres" />
+          </AssociationSet>
+          <AssociationSet Name="alquileres_fk_soc" Association="Self.alquileres_fk_soc">
+            <End Role="socios" EntitySet="socios" />
+            <End Role="alquileres" EntitySet="alquileres" />
+          </AssociationSet>
+          <AssociationSet Name="peliculas_fk_cat" Association="Self.peliculas_fk_cat">
+            <End Role="categorias" EntitySet="categorias" />
+            <End Role="peliculas" EntitySet="peliculas" />
+          </AssociationSet>
+          <AssociationSet Name="peliculas_fk_est" Association="Self.peliculas_fk_est">
+            <End Role="estilos" EntitySet="estilos" />
+            <End Role="peliculas" EntitySet="peliculas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="videoclubBinarioModelStoreContainer" CdmEntityContainer="videoclubBinarioEntities">
+          <EntitySetMapping Name="alquileres">
+            <EntityTypeMapping TypeName="videoclubBinarioModel.alquileres">
+              <MappingFragment StoreEntitySet="alquileres">
+                <ScalarProperty Name="codAlquiler" ColumnName="codAlquiler" />
+                <ScalarProperty Name="fechaAlquiler" ColumnName="fechaAlquiler" />
+                <ScalarProperty Name="socio" ColumnName="socio" />
+                <ScalarProperty Name="pelicula" ColumnName="pelicula" />
+                <ScalarProperty Name="fechaDevolucion" ColumnName="fechaDevolucion" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="categorias">
+            <EntityTypeMapping TypeName="videoclubBinarioModel.categorias">
+              <MappingFragment StoreEntitySet="categorias">
+                <ScalarProperty Name="categoria" ColumnName="categoria" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="estilos">
+            <EntityTypeMapping TypeName="videoclubBinarioModel.estilos">
+              <MappingFragment StoreEntitySet="estilos">
+                <ScalarProperty Name="estilo" ColumnName="estilo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="peliculas">
+            <EntityTypeMapping TypeName="videoclubBinarioModel.peliculas">
+              <MappingFragment StoreEntitySet="peliculas">
+                <ScalarProperty Name="codpeli" ColumnName="codpeli" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+                <ScalarProperty Name="director" ColumnName="director" />
+                <ScalarProperty Name="protagonista" ColumnName="protagonista" />
+                <ScalarProperty Name="argumento" ColumnName="argumento" />
+                <ScalarProperty Name="estilo" ColumnName="estilo" />
+                <ScalarProperty Name="anio" ColumnName="anio" />
+                <ScalarProperty Name="caratula" ColumnName="caratula" />
+                <ScalarProperty Name="categoria" ColumnName="categoria" />
+                <ScalarProperty Name="stock" ColumnName="stock" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="socios">
+            <EntityTypeMapping TypeName="videoclubBinarioModel.socios">
+              <MappingFragment StoreEntitySet="socios">
+                <ScalarProperty Name="idSocio" ColumnName="idSocio" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="pwd" ColumnName="pwd" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apell1" ColumnName="apell1" />
+                <ScalarProperty Name="apell2" ColumnName="apell2" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="localidad" ColumnName="localidad" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
